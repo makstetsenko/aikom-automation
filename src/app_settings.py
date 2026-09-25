@@ -25,8 +25,6 @@ def get_auth_key() -> pathlib.Path:
 
     auth_key_path = pathlib.Path(auth_key_path_env_value).resolve()
 
-    print(auth_key_path.as_posix())
-
     if not auth_key_path.is_file():
         raise ValueError("AUTH_KEY_PATH is not a file")
 

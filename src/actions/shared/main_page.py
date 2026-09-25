@@ -35,7 +35,7 @@ def try_auth(page: Page):
     shared_actions.wait_network_idle(page)
 
     file_input = page.locator("#PKeyFileInput")
-    shared_actions.wait_for_element_exist(file_input)
+    shared_actions.wait_for_element_attached(file_input)
 
     file_input.set_input_files(app_settings.auth_key_path.absolute().as_posix())
 

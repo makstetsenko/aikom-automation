@@ -17,3 +17,9 @@ def go_to_information_about_staff(page: Page):
     logger.info("Go to 'Інформація про працівників'")
     page.get_by_text("Інформація про працівників").click()
     shared_actions.wait_network_idle(page)
+
+
+def go_to_information_about_students(page: Page):
+    logger.info("Go to 'Інформація про здобувачів освіти'")
+    page.get_by_text("Інформація про здобувачів освіти").click()
+    shared_actions.wait_network_idle(page)

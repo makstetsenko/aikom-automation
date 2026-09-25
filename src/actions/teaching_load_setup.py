@@ -111,7 +111,7 @@ def select_teaching_class(class_name: str, modal: Locator):
 def set_teaching_hours_per_week(hors_per_week: float, modal: Locator):
     def format_number(value: float) -> str:
         return f"{value:g}".replace(".", ",")
-    
+
     input = modal.get_by_role("textbox", name="К-ть годин на тиждень *")
     input.clear()
     input.fill(format_number(hors_per_week))
@@ -153,7 +153,7 @@ def setup_teaching_load_for_teacher(
         shared_actions.wait_network_idle(page)
 
         # Order is important here for AIKOM.
-        
+
         select_job_title(config.job_title, add_load_modal)
         select_work_place(work_place, add_load_modal)
         select_load_group_type(config.load_group_type, add_load_modal)
@@ -168,8 +168,8 @@ def setup_teaching_load_for_teacher(
         set_teaching_hours_per_week(config.teaching_hours_per_week, add_load_modal)
 
         # ***
-        
+
         save_button = add_load_modal.get_by_role("button", name="Зберегти")
         save_button.click()  # Closes modal
-        
+
     input("press Enter")
