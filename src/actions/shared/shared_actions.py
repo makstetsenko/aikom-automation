@@ -14,8 +14,8 @@ def wait_for_visible_and_stable(locator: Locator):
         element.wait_for_element_state("stable")
 
 
-def wait_for_visible(locator: Locator):
-    locator.wait_for(state="visible")
+def wait_for_visible(locator: Locator, timeout: int = 30_000):
+    locator.wait_for(state="visible", timeout=timeout)
 
 
 def wait_for_element_attached(locator: Locator):
@@ -54,3 +54,25 @@ def fill_auth_key_iframe_and_sign(page: Page):
     wait_for_visible_and_stable(sign_data_button)
     sign_data_button.click()
     wait_network_idle(page)
+
+
+def click_next_button_on_page(page: Page):
+    next_button = page.get_by_role("button", name="Далі")
+    wait_for_visible_and_stable(next_button)
+    next_button.click()
+
+    wait_network_idle(page)
+
+
+def try_close_all_stupid_popups(page: Page):
+    try:
+        popups = page.locator("div[data-testid='timed-notification']").all()
+            
+        for p in popups:
+            if not p.is_visible():
+                continue
+            
+            close_button = p.get_by_role("button")
+            close_button.click()
+    except:
+        pass
