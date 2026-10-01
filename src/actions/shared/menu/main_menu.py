@@ -23,3 +23,12 @@ def go_to_information_about_students(page: Page):
     logger.info("Go to 'Інформація про здобувачів освіти'")
     page.get_by_text("Інформація про здобувачів освіти").click()
     shared_actions.wait_network_idle(page)
+
+
+def go_to_school_menu(page: Page):
+    link_name = "Інформація про заклад освіти"
+
+    logger.info(f"Go to '{link_name}'")
+    page.get_by_text(link_name).click()
+
+    shared_actions.wait_network_idle(page)

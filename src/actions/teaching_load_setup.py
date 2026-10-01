@@ -274,6 +274,6 @@ def setup_teaching_load_for_teacher(
     shared_actions.wait_for_visible_and_stable(next_button)
     next_button.click()
 
-    shared_actions.fill_auth_key_iframe_and_sign(page)
+    shared_actions.fill_auth_key_iframe_and_read_key_and_click_continue(page)
 
     logger.info(f"Done teacher {teacher_name} {teacher_surname}")

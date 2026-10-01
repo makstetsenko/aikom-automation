@@ -4,6 +4,7 @@ from playwright.sync_api import Page, expect
 
 from src.actions.shared import shared_actions
 from src.actions.shared.menu import main_menu, student_menu
+from src.actions.shared.update_student_info import add_living_address_modal, edit_student_page
 
 logger = logging.getLogger(__name__)
 
@@ -42,12 +43,12 @@ def find_student(student_surname: str, student_name: str, page: Page) -> bool:
 
 def fill_oop_info(oop_level: int, page: Page):
     shared_actions.try_close_all_stupid_popups(page)
-    
+
     studying_needs_checkbox = page.get_by_role("checkbox", name="Особливі освітні потреби")
     shared_actions.wait_for_visible(studying_needs_checkbox)
-    
+
     # do uncheck -> check just to enable field oop_level_textbox
-    studying_needs_checkbox.uncheck()    
+    studying_needs_checkbox.uncheck()
     studying_needs_checkbox.check()
 
     oop_level_textbox = page.get_by_role("textbox", name="Необхідний рівень підтримки: *")
@@ -63,6 +64,7 @@ def configure_oop_level_for_student(name: str, surname: str, oop_level: int, pag
     logger.info(f"Processing student {name} {surname}")
     main_menu.go_to_available_service(page)
     main_menu.go_to_information_about_students(page)
+    
     student_menu.go_to_student_update_page(page)
 
     was_student_found = find_student(surname, name, page)
@@ -70,6 +72,14 @@ def configure_oop_level_for_student(name: str, surname: str, oop_level: int, pag
     if not was_student_found:
         logger.warning(f"Student {name} {surname} was not found. Skip.")
         return
+    
+    shared_actions.wait(page, 1000)
+
+    if not edit_student_page.has_any_living_address(page):
+        edit_student_page.click_on_add_living_address(page)
+        modal = add_living_address_modal.get_modal(page)
+        add_living_address_modal.select_country("Україна", modal)
+        add_living_address_modal.save(modal)
 
     shared_actions.click_next_button_on_page(page)
 
@@ -79,4 +89,4 @@ def configure_oop_level_for_student(name: str, surname: str, oop_level: int, pag
 
     shared_actions.click_next_button_on_page(page)
 
-    shared_actions.fill_auth_key_iframe_and_sign(page)
+    shared_actions.fill_auth_key_iframe_and_read_key_and_click_continue(page)

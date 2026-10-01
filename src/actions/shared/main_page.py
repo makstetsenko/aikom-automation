@@ -59,6 +59,29 @@ def try_auth(page: Page):
     wait_for_welcome_header(page)
 
 
+def try_auth_v2(page: Page):
+    shared_actions.wait_network_idle(page)
+    auth_button = page.get_by_role("button", name="Увійти до кабінету")
+
+    if auth_button.count() == 0:
+        wait_for_welcome_header(page)
+        return
+
+    shared_actions.wait_network_idle(page)
+    shared_actions.wait_for_visible_and_stable(auth_button)
+    auth_button.click()
+
+    shared_actions.fill_auth_key_iframe_and_read_key(page)
+
+    login_btn = page.get_by_role("button", name="Увійти")
+    shared_actions.wait_for_visible_and_stable(login_btn)
+
+    login_btn.click()
+    shared_actions.wait_network_idle(page)
+
+    wait_for_welcome_header(page)
+
+
 def go_to_main_page(page: Page) -> None:
     page.goto(AIKOM_URL)
-    try_auth(page)
+    try_auth_v2(page)

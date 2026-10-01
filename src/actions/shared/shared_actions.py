@@ -6,6 +6,9 @@ from src.app_settings import get_app_settings
 def wait_network_idle(page: Page):
     page.wait_for_load_state("networkidle")
 
+def wait(page: Page, timeout: int=30_000):
+    page.wait_for_timeout(timeout)
+
 
 def wait_for_visible_and_stable(locator: Locator):
     locator.wait_for(state="visible")
@@ -27,7 +30,7 @@ def click_on_html_body(page: Page):
     page.locator("body").click()
 
 
-def fill_auth_key_iframe_and_sign(page: Page):
+def fill_auth_key_iframe_and_read_key(page: Page):
     page.wait_for_timeout(5_000)
 
     iframe = page.locator("#sign-widget")
@@ -50,6 +53,10 @@ def fill_auth_key_iframe_and_sign(page: Page):
     wait_for_visible(read_file_button)
     read_file_button.click()
 
+
+def fill_auth_key_iframe_and_read_key_and_click_continue(page: Page):
+    fill_auth_key_iframe_and_read_key(page)
+
     sign_data_button = page.get_by_role("button", name="Підписати дані", exact=True)
     wait_for_visible_and_stable(sign_data_button)
     sign_data_button.click()
@@ -67,11 +74,11 @@ def click_next_button_on_page(page: Page):
 def try_close_all_stupid_popups(page: Page):
     try:
         popups = page.locator("div[data-testid='timed-notification']").all()
-            
+
         for p in popups:
             if not p.is_visible():
                 continue
-            
+
             close_button = p.get_by_role("button")
             close_button.click()
     except:

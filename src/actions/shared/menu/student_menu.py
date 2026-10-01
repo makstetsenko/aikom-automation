@@ -21,7 +21,10 @@ def go_to_student_update_page(page: Page):
     continue_to_service_button = page.get_by_role("button", name="Продовжити надання послуги")
 
     try:
-        shared_actions.wait_for_visible(continue_to_service_button, timeout=2000)
+        logger.info(f"Try continue to services")
+        shared_actions.wait(page, 2000)
+        shared_actions.wait_for_visible(continue_to_service_button, timeout=1000)
         continue_to_service_button.click()
     except:
-        return
+        pass
+

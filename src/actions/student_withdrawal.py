@@ -226,6 +226,6 @@ def withdraw_student(
     fill_application_acceptance_info(withdrawal_date, page)
     fill_withdrawal_info(withdrawal_date, withdrawal_order_number, withdrawal_order_reason, page)
 
-    shared_actions.fill_auth_key_iframe_and_sign(page)
+    shared_actions.fill_auth_key_iframe_and_read_key_and_click_continue(page)
 
     logger.info(f"Done student {student_name} {student_surname}")

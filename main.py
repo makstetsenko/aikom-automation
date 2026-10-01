@@ -3,11 +3,22 @@ import logging
 import pathlib
 
 from playwright.sync_api import Page, expect, sync_playwright, TimeoutError as PlaywrightTimeoutError
-from src.actions import student_oop_level, student_withdrawal as student_withdrawal_action, teaching_load_setup
+from src.actions import (
+    student_oop_level,
+    student_withdrawal as student_withdrawal_action,
+    teaching_load_setup,
+    update_classes_type,
+)
 from src.actions.shared import main_page
+from src.actions.shared.update_class.search_class_page import StudyingForm
 from src.app_logging import setup_logging
 from src.browser import create_browser
-from src.domain import student_with_oop, teaching_load, withdrawal_student as withdrawal_student_domain
+from src.domain import (
+    student_with_oop,
+    teaching_load,
+    update_class_type_model,
+    withdrawal_student as withdrawal_student_domain,
+)
 
 logger = logging.getLogger("main")
 
@@ -63,7 +74,7 @@ def setup_teaching_load(page: Page):
 
 
 def setup_students_oop_level(page: Page):
-    students = student_with_oop.read_students_from_csv(pathlib.Path("data/діти ООП + рівень ІРЦ.csv"))
+    students = student_with_oop.read_students_from_csv(pathlib.Path("data/учні-очні-рівень-ірц-2026-2027-2.csv"))
 
     for s in students:
         main_page.go_to_main_page(page)
@@ -73,11 +84,30 @@ def setup_students_oop_level(page: Page):
         )
 
 
+def update_classes_types(page: Page):
+    classes = update_class_type_model.read_from_csv(pathlib.Path("data/classes/спец-класи-2026-2027 copy.csv"))
+
+    for c in classes:
+        main_page.go_to_main_page(page)
+        update_classes_type.update_class_type(
+            academic_year=c.academic_year,
+            class_year=c.class_year,
+            class_name=c.class_name,
+            class_teacher_name=c.class_teacher_name,
+            class_studying_form=c.class_studying_form,
+            class_type=c.class_type,
+            page=page,
+        )
+
+
 def main():
     with sync_playwright() as p:
         context = create_browser(p)
 
         page = context.pages[0] if context.pages else context.new_page()
+
+        # main_page.go_to_main_page(page)
+        # input("PRESS ENTER")
 
         # ---
         # Here uncomment required actions.
@@ -89,6 +119,8 @@ def main():
         # setup_teaching_load(page)
 
         setup_students_oop_level(page)
+
+        # update_classes_types(page)
 
         context.close()
 
