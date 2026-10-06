@@ -4,10 +4,7 @@ import re
 from playwright.sync_api import Page
 
 from src.actions.shared import shared_actions
-
-
-class StudyingForm(StrEnum):
-    ON_CAMPUS = "Очна (денна)"
+from src.domain.aikom_enums import StudyingForm
 
 
 def select_academic_year(academic_year: str, page: Page):

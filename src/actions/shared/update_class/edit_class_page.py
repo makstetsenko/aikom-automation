@@ -32,10 +32,10 @@ def select_class_teacher(teacher_name: str, page: Page):
 def get_class_type(page: Page) -> ClassType | None:
     textbox = page.get_by_role("textbox", name="Тип класу *")
     class_type = textbox.inner_text().strip()
-    
+
     if class_type == "":
         return None
-    
+
     return ClassType(class_type)
 
 

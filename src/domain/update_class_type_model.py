@@ -4,7 +4,7 @@ import pathlib
 from pydantic import BaseModel, ConfigDict, Field
 
 from src.actions.shared.update_class.edit_class_page import ClassType
-from src.actions.shared.update_class.search_class_page import StudyingForm
+from src.domain.aikom_enums import StudyingForm
 
 
 class UpdateClassType(BaseModel):

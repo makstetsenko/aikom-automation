@@ -8,18 +8,13 @@ from enum import StrEnum
 from src.actions.shared import shared_actions
 from src.actions.shared.menu import main_menu, student_menu
 from src.constants import DATE_FORMAT
+from src.domain.aikom_enums import RelationshipToStudentType
 
 logger = logging.getLogger(__name__)
 
 
 class WithdrawalType(StrEnum):
     MOVING_TO_ANOTHER_SCHOOL = "Перехід до іншого навчального закладу"
-
-
-class RelationshipToStudentType(StrEnum):
-    MOTHER = "Мати"
-    FATHER = "Батько"
-    GUARDIAN = "Опікун"
 
 
 def find_student(student_surname: str, student_name: str, page: Page) -> bool:
@@ -97,7 +92,7 @@ def fill_parent_info(
     logger.info(f"Filling parent info")
     parent_full_name_textbox = page.get_by_role("textbox", name="Прізвище, ім’я, по батькові (за наявності) заявника *")
     shared_actions.wait_for_visible_and_stable(parent_full_name_textbox)
-    parent_full_name_textbox.fill(parent_full_name)
+    parent_full_name_textbox.fill(parent_full_name.strip())
 
     relationship_to_student_textbox = page.get_by_role("textbox", name="Тип відносин з дитиною *")
     shared_actions.wait_for_visible_and_stable(relationship_to_student_textbox)

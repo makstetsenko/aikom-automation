@@ -64,7 +64,7 @@ def configure_oop_level_for_student(name: str, surname: str, oop_level: int, pag
     logger.info(f"Processing student {name} {surname}")
     main_menu.go_to_available_service(page)
     main_menu.go_to_information_about_students(page)
-    
+
     student_menu.go_to_student_update_page(page)
 
     was_student_found = find_student(surname, name, page)
@@ -72,7 +72,7 @@ def configure_oop_level_for_student(name: str, surname: str, oop_level: int, pag
     if not was_student_found:
         logger.warning(f"Student {name} {surname} was not found. Skip.")
         return
-    
+
     shared_actions.wait(page, 1000)
 
     if not edit_student_page.has_any_living_address(page):

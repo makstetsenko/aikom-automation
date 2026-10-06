@@ -6,7 +6,8 @@ from src.app_settings import get_app_settings
 def wait_network_idle(page: Page):
     page.wait_for_load_state("networkidle")
 
-def wait(page: Page, timeout: int=30_000):
+
+def wait(page: Page, timeout: int = 30_000):
     page.wait_for_timeout(timeout)
 
 
@@ -68,6 +69,7 @@ def click_next_button_on_page(page: Page):
     wait_for_visible_and_stable(next_button)
     next_button.click()
 
+    wait(page, 500)
     wait_network_idle(page)
 
 

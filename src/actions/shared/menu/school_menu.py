@@ -12,4 +12,3 @@ def go_to_update_classes(page: Page):
     logger.info(f"Go to '{link_name}'")
     page.get_by_text(link_name).click()
     shared_actions.wait_network_idle(page)
-    

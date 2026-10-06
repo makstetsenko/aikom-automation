@@ -11,6 +11,7 @@ from src.actions.shared.update_class.search_class_page import StudyingForm
 
 logger = logging
 
+
 def update_class_type(
     academic_year: str,
     class_year: int,
@@ -31,7 +32,7 @@ def update_class_type(
     search_class_page.select_class_name(class_name, page)
 
     shared_actions.click_next_button_on_page(page)
-    
+
     shared_actions.wait(page, timeout=1000)
 
     is_class_teacher_selected = edit_class_page.is_class_teacher_selected(page)
