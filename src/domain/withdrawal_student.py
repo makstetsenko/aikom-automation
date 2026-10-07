@@ -22,7 +22,6 @@ class WithdrawalStudent(BaseModel):
     withdrawal_type: str = Field(alias="Причина відрахування")
     was_withdrawal_done: bool = Field(alias="Виконано?")
 
-
     @field_validator("withdrawal_date", mode="before")
     @classmethod
     def parse_date(cls, value):
@@ -30,7 +29,7 @@ class WithdrawalStudent(BaseModel):
             return value
 
         return datetime.datetime.strptime(value, "%d.%m.%Y").date()
-    
+
     @field_validator("was_withdrawal_done", mode="before")
     @classmethod
     def parse_bool(cls, value):
@@ -41,6 +40,7 @@ class WithdrawalStudent(BaseModel):
             return False
 
         return str(value).lower() == "так"
+
 
 def read_students_from_csv(path: pathlib.Path) -> list[WithdrawalStudent]:
     with open(path.as_posix(), "r", encoding="utf-8") as file:

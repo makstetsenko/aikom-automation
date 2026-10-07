@@ -2,8 +2,9 @@ import datetime
 
 from playwright.sync_api import Page
 
-from src.actions.shared import create_student_profile, shared_actions, student_enrolment_from_another_school
+from src.actions.shared import shared_actions
 from src.actions.shared.menu import main_menu, student_menu
+from src.actions.shared.students import create_profile, enrolment_from_another_school
 from src.domain.aikom_enums import DocumentType, RelationshipToStudentType, StudyingForm
 
 
@@ -32,28 +33,22 @@ def enroll_student_from_another_school(
 
     student_menu.go_to_student_enrollment_from_another_school_page(page)
 
-    student_enrolment_from_another_school.search_page.select_document_type(DocumentType.BIRTH_CERTIFICATE, page)
-    student_enrolment_from_another_school.search_page.fill_birth_certificate_serial(
-        student_birth_certificate_serial, page
-    )
-    student_enrolment_from_another_school.search_page.fill_birth_certificate_number(
-        student_birth_certificate_number, page
-    )
-    student_enrolment_from_another_school.search_page.select_academic_year(academic_year, studying_form, page)
-    student_enrolment_from_another_school.search_page.select_class_year(class_year, page)
-    student_enrolment_from_another_school.search_page.select_class_name(class_name, page)
+    enrolment_from_another_school.search_page.select_document_type(DocumentType.BIRTH_CERTIFICATE, page)
+    enrolment_from_another_school.search_page.fill_birth_certificate_serial(student_birth_certificate_serial, page)
+    enrolment_from_another_school.search_page.fill_birth_certificate_number(student_birth_certificate_number, page)
+    enrolment_from_another_school.search_page.select_academic_year(academic_year, studying_form, page)
+    enrolment_from_another_school.search_page.select_class_year(class_year, page)
+    enrolment_from_another_school.search_page.select_class_name(class_name, page)
 
     shared_actions.click_next_button_on_page(page)
 
-    student_enrolment_from_another_school.enrolment_page.fill_parent_name(parent_name, page)
-    student_enrolment_from_another_school.enrolment_page.select_relationship_to_student(
-        parent_relationship_to_student, page
-    )
-    student_enrolment_from_another_school.enrolment_page.fill_parent_phone_number(parent_phone_number, page)
-    student_enrolment_from_another_school.enrolment_page.check_parent_has_identical_document(page)
-    student_enrolment_from_another_school.enrolment_page.fill_order_date(enrolment_date, page)
-    student_enrolment_from_another_school.enrolment_page.fill_order_number(enrolment_order_number, page)
-    student_enrolment_from_another_school.enrolment_page.fill_application_submission_date(enrolment_date, page)
+    enrolment_from_another_school.enrolment_page.fill_parent_name(parent_name, page)
+    enrolment_from_another_school.enrolment_page.select_relationship_to_student(parent_relationship_to_student, page)
+    enrolment_from_another_school.enrolment_page.fill_parent_phone_number(parent_phone_number, page)
+    enrolment_from_another_school.enrolment_page.check_parent_has_identical_document(page)
+    enrolment_from_another_school.enrolment_page.fill_order_date(enrolment_date, page)
+    enrolment_from_another_school.enrolment_page.fill_order_number(enrolment_order_number, page)
+    enrolment_from_another_school.enrolment_page.fill_application_submission_date(enrolment_date, page)
 
     shared_actions.click_next_button_on_page(page)
 
@@ -81,18 +76,18 @@ def enroll_student(
 
     student_menu.go_to_create_student_profile_page(page)
 
-    create_student_profile.search_page.select_document_type(document_type=DocumentType.BIRTH_CERTIFICATE, page=page)
-    create_student_profile.search_page.fill_birth_certificate_serial(student_birth_certificate_serial, page)
-    create_student_profile.search_page.fill_birth_certificate_number(student_birth_certificate_number, page)
-    create_student_profile.search_page.fill_birth_date(student_birth_date, page)
+    create_profile.search_page.select_document_type(document_type=DocumentType.BIRTH_CERTIFICATE, page=page)
+    create_profile.search_page.fill_birth_certificate_serial(student_birth_certificate_serial, page)
+    create_profile.search_page.fill_birth_certificate_number(student_birth_certificate_number, page)
+    create_profile.search_page.fill_birth_date(student_birth_date, page)
 
     shared_actions.click_next_button_on_page(page)
 
-    if create_student_profile.search_page.is_student_missing(page):
+    if create_profile.search_page.is_student_missing(page):
         logger.warning(f"Student {student_birth_certificate_serial} {student_birth_certificate_number} was not found")
         return
 
-    found_student_info = create_student_profile.search_page.try_get_student_search_result(page)
+    found_student_info = create_profile.search_page.try_get_student_search_result(page)
 
     # create student profile from scratch (aikom profile does not exist)
     if found_student_info is None:

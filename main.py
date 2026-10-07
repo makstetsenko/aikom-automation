@@ -18,6 +18,7 @@ from src.domain import (
     enrolment_student,
     student_with_oop,
     teaching_load,
+    transfer_student,
     update_class_type_model,
     withdrawal_student as withdrawal_student_domain,
 )
@@ -32,7 +33,7 @@ def withdraw_students(page: Page):
     for s in students:
         if s.was_withdrawal_done:
             continue
-        
+
         main_page.go_to_main_page(page)
 
         student_withdrawal_action.withdraw_student(
@@ -58,7 +59,7 @@ def students_enrolment(page: Page):
     for s in students:
         if s.was_enrolment_done:
             continue
-        
+
         main_page.go_to_main_page(page)
         actions.student_enrolment.enroll_student(
             student_birth_certificate_serial=s.student_birth_certificate_serial,
@@ -73,6 +74,33 @@ def students_enrolment(page: Page):
             parent_relationship_to_student=s.parent_relationship_to_student,
             enrolment_date=s.enrolment_date,
             enrolment_order_number=s.enrolment_order_number,
+            page=page,
+        )
+
+
+def students_transfer(page: Page):
+    data_path = pathlib.Path("./data/students/transfer/Переведення учня (Відповіді) - Відповіді форми (1) (1).csv")
+    students = transfer_student.read_students_from_csv(data_path)
+
+    for s in students:
+        if s.was_done:
+            continue
+
+        main_page.go_to_main_page(page)
+        actions.student_transfer.transfer_student(
+            student_name=s.student_name,
+            student_surname=s.student_surname,
+            transfer_type=s.transfer_type,
+            order_number=s.order_number,
+            order_date=s.order_date,
+            from_academic_year=s.from_academic_year,
+            from_studying_form=s.from_studying_form,
+            from_class_year=s.from_class_year,
+            from_class_name=s.from_class_name,
+            to_academic_year=s.to_academic_year,
+            to_studying_form=s.to_studying_form,
+            to_class_year=s.to_class_year,
+            to_class_name=s.to_class_name,
             page=page,
         )
 
@@ -145,15 +173,17 @@ def main():
         # Later I will add actions setup and choosing from config or smth
         # ---
 
-        withdraw_students(page)
+        # withdraw_students(page)
 
         # setup_teaching_load(page)
 
         # setup_students_oop_level(page)
 
         # update_classes_types(page)
-        
+
         # students_enrolment(page)
+
+        students_transfer(page)
 
         context.close()
 
