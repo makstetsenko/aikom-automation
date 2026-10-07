@@ -5,7 +5,7 @@ import pathlib
 from playwright.sync_api import Page, expect, sync_playwright, TimeoutError as PlaywrightTimeoutError
 from src import actions
 from src.actions import (
-    student_oop_level,
+    student_sen_level,
     student_withdrawal as student_withdrawal_action,
     teaching_load_setup,
     update_classes_type,
@@ -138,8 +138,8 @@ def setup_students_oop_level(page: Page):
     for s in students:
         main_page.go_to_main_page(page)
 
-        student_oop_level.configure_oop_level_for_student(
-            name=s.name, surname=s.surname, oop_level=s.oop_level, page=page
+        student_sen_level.configure_oop_level_for_student(
+            name=s.name, surname=s.surname, sen_level=s.oop_level, page=page
         )
 
 

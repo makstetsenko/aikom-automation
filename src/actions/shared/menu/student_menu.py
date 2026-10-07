@@ -9,11 +9,10 @@ logger = logging.getLogger(__name__)
 
 def try_continue_to_service(page: Page):
     continue_to_service_button = page.get_by_role("button", name="Продовжити надання послуги")
-    for _ in range(3):
+    for _ in range(5):
         try:
             logger.info(f"Try continue to services")
-            shared_actions.wait(page, 500)
-            shared_actions.wait_for_visible(continue_to_service_button, timeout=1000)
+            shared_actions.wait_for_visible(continue_to_service_button, timeout=200)
             continue_to_service_button.click()
             return
         except:
@@ -31,15 +30,7 @@ def go_to_student_update_page(page: Page):
     page.get_by_text("Оновлення освітнього профілю дитини").click()
     shared_actions.wait_network_idle(page)
 
-    continue_to_service_button = page.get_by_role("button", name="Продовжити надання послуги")
-
-    try:
-        logger.info(f"Try continue to services")
-        shared_actions.wait(page, 2000)
-        shared_actions.wait_for_visible(continue_to_service_button, timeout=1000)
-        continue_to_service_button.click()
-    except:
-        pass
+    try_continue_to_service(page)
 
 
 def go_to_create_student_profile_page(page: Page):
