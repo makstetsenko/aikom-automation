@@ -3,12 +3,7 @@ from enum import StrEnum
 from playwright.sync_api import Page
 
 from src.actions.shared import shared_actions
-
-
-class ClassType(StrEnum):
-    ON_CAMPUS = "Загального типу денний очний"
-    SPECIALIZED = "Спеціальний"
-    BLENDED = "Загального типу денний змішаний"
+from src.domain.aikom_enums import ClassType
 
 
 def is_class_teacher_selected(page: Page):

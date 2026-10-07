@@ -7,9 +7,7 @@ from src.actions.shared.menu import main_menu, student_menu
 from src.actions.shared.students import update_profile
 from src.actions.shared.students.update_profile import add_living_address_modal
 
-
 logger = logging.getLogger(__name__)
-
 
 
 def configure_oop_level_for_student(name: str, surname: str, sen_level: int, page: Page):

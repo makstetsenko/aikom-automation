@@ -4,10 +4,10 @@ from playwright.sync_api import Page
 
 from src.actions.shared import shared_actions
 from src.actions.shared.menu import main_menu, school_menu
-from src.actions.shared.update_class import search_class_page
-from src.actions.shared.update_class import edit_class_page
-from src.actions.shared.update_class.edit_class_page import ClassType
-from src.actions.shared.update_class.search_class_page import StudyingForm
+from src.actions.shared.school.update_class import search_class_page
+from src.actions.shared.school.update_class import edit_class_page
+from src.actions.shared.school.update_class.edit_class_page import ClassType
+from src.actions.shared.school.update_class.search_class_page import StudyingForm
 
 logger = logging
 

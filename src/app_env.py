@@ -5,16 +5,16 @@ from dotenv import load_dotenv
 from pydantic import BaseModel
 
 
-class AppSettings(BaseModel):
+class AppEnv(BaseModel):
     auth_key_path: pathlib.Path
     auth_key_password: str
 
 
-class AppSettingsStore(BaseModel):
-    app_settings: AppSettings | None
+class AppEnvStore(BaseModel):
+    app_env: AppEnv | None
 
 
-APP_SETTINGS_STORE = AppSettingsStore(app_settings=None)
+APP_ENV_STORE = AppEnvStore(app_env=None)
 
 
 def get_auth_key() -> pathlib.Path:
@@ -40,19 +40,19 @@ def get_auth_password() -> str:
     return env_value
 
 
-def get_app_settings() -> AppSettings:
-    global APP_SETTINGS_STORE
+def get_app_env() -> AppEnv:
+    global APP_ENV_STORE
 
-    if APP_SETTINGS_STORE is None:
-        APP_SETTINGS_STORE = AppSettingsStore(app_settings=None)
+    if APP_ENV_STORE is None:
+        APP_ENV_STORE = AppEnvStore(app_env=None)
 
-    if APP_SETTINGS_STORE.app_settings is not None:
-        return APP_SETTINGS_STORE.app_settings
+    if APP_ENV_STORE.app_env is not None:
+        return APP_ENV_STORE.app_env
 
     load_dotenv()
 
-    settings = AppSettings(auth_key_path=get_auth_key(), auth_key_password=get_auth_password())
+    app_env = AppEnv(auth_key_path=get_auth_key(), auth_key_password=get_auth_password())
 
-    APP_SETTINGS_STORE.app_settings = settings
+    APP_ENV_STORE.app_env = app_env
 
-    return settings
+    return app_env

@@ -6,7 +6,6 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from src.domain.aikom_enums import RelationshipToStudentType, StudyingForm
 
-
 class EnrolmentStudent(BaseModel):
     model_config = ConfigDict(
         extra="ignore",

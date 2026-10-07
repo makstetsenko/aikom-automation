@@ -23,3 +23,9 @@ class StudentTransferOrderType(StrEnum):
     REPEAT_GRADE = "Залишення на повторний курс навчання"
     TRANSFER_WITHIN_GRADE = "Переведення з класу в клас в межах паралелі"
     TRANSFER_TO_INDIVIDUAL_STUDY = "Переведення на індивідуальну форму навчання"
+
+
+class ClassType(StrEnum):
+    ON_CAMPUS = "Загального типу денний очний"
+    SPECIALIZED = "Спеціальний"
+    BLENDED = "Загального типу денний змішаний"

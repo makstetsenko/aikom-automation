@@ -1,0 +1,10 @@
+# you can chain actions
+
+name: student_meal_setup
+data_source: data/students.csv
+next:
+  name: go_home
+  data_source: null
+  next: 
+    name: update_classes_type
+    data_source: data/classes.csv

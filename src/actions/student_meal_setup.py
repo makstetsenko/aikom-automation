@@ -8,6 +8,7 @@ from src.actions.shared.students import update_profile
 
 logger = logging.getLogger(__name__)
 
+
 def check_if_student_requires_meal(name: str, surname: str, checked: bool, page: Page):
     logger.info(f"Processing student {name} {surname}")
     main_menu.go_to_available_service(page)
@@ -32,7 +33,6 @@ def check_if_student_requires_meal(name: str, surname: str, checked: bool, page:
         modal = update_profile.add_living_address_modal.get_modal(page)
         update_profile.add_living_address_modal.select_country("Україна", modal)
         update_profile.add_living_address_modal.save(modal)
-
 
     update_profile.update_profile_page.check_has_free_meal(checked, page)
 

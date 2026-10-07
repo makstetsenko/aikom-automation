@@ -27,7 +27,6 @@ def get_previous_page_btn(page: Page):
     return page.get_by_role("button", name="Попередня сторінка")
 
 
-
 def check_student(search_name: str, search_surname: str, page: Page):
     shared_actions.wait_network_idle(page)
     shared_actions.wait(page, 1000)

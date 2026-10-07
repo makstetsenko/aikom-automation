@@ -1,0 +1,4 @@
+# single action
+
+name: student_meal_setup
+data_source: data/students.csv

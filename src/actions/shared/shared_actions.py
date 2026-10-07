@@ -1,6 +1,6 @@
 from playwright.sync_api import Locator, Page, expect
 
-from src.app_settings import get_app_settings
+from src.app_env import get_app_env
 
 
 def wait_network_idle(page: Page):
@@ -32,6 +32,8 @@ def click_on_html_body(page: Page):
 
 
 def fill_auth_key_iframe_and_read_key(page: Page):
+    input("PRESS ENTER")
+    
     page.wait_for_timeout(5_000)
 
     iframe = page.locator("#sign-widget")
@@ -42,7 +44,7 @@ def fill_auth_key_iframe_and_read_key(page: Page):
     read_file_input = sign_widget.locator("#pkReadFileInput")
     wait_for_element_attached(read_file_input)
 
-    app_settings = get_app_settings()
+    app_settings = get_app_env()
 
     read_file_input.set_input_files(app_settings.auth_key_path.as_posix())
 

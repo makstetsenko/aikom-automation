@@ -62,7 +62,7 @@ def select_from_class(class_name: str, page: Page):
 
     wait(page)
 
-    page.get_by_role("option", name=re.compile(fr"^{re.escape(class_name)}")).click()
+    page.get_by_role("option", name=re.compile(rf"^{re.escape(class_name)}")).click()
 
     wait(page)
 

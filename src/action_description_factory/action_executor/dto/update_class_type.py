@@ -3,7 +3,7 @@ import pathlib
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from src.actions.shared.update_class.edit_class_page import ClassType
+from src.actions.shared.school.update_class.edit_class_page import ClassType
 from src.domain.aikom_enums import StudyingForm
 
 

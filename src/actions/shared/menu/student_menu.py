@@ -8,10 +8,10 @@ logger = logging.getLogger(__name__)
 
 
 def try_continue_to_service(page: Page):
-    continue_to_service_button = page.get_by_role("button", name="Продовжити надання послуги")
+    logger.info(f"Try continue to services")
     for _ in range(5):
         try:
-            logger.info(f"Try continue to services")
+            continue_to_service_button = page.get_by_role("button", name="Продовжити надання послуги")
             shared_actions.wait_for_visible(continue_to_service_button, timeout=200)
             continue_to_service_button.click()
             return

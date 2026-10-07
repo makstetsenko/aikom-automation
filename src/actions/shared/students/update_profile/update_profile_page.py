@@ -36,10 +36,10 @@ def check_special_education_needs_enabled(checked: bool, page: Page):
     else:
         studying_needs_checkbox.check()
         studying_needs_checkbox.uncheck()
-        
+
     shared_actions.wait(page, 500)
-        
-        
+
+
 def select_special_education_needs_level(level: int, page: Page):
     sen_level_textbox = page.get_by_role("textbox", name="Необхідний рівень підтримки: *")
     shared_actions.wait_for_visible(sen_level_textbox)
@@ -48,11 +48,11 @@ def select_special_education_needs_level(level: int, page: Page):
     sen_level_option = page.get_by_role("option", name=f"{level}-й рівень")
     shared_actions.wait_for_visible(sen_level_option)
     sen_level_option.click()
-    
-    
+
+
 def check_has_free_meal(checked: bool, page: Page):
     checkbox = page.get_by_role("checkbox", name="Забезпечується безкоштовним харчуванням")
-    
+
     if checked:
         checkbox.check()
     else:

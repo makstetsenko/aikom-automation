@@ -1,7 +1,7 @@
 from playwright.sync_api import Page
 
 from src.actions.shared import shared_actions
-from src.app_settings import get_app_settings
+from src.app_env import get_app_env
 
 AIKOM_URL = "https://cabinet.aikom.gov.ua"
 
@@ -26,7 +26,7 @@ def try_auth(page: Page):
     auth_button.click()
     shared_actions.wait_network_idle(page)
 
-    app_settings = get_app_settings()
+    app_settings = get_app_env()
 
     select_file_storage_button = page.get_by_role("link", name="Файловий носій")
     shared_actions.wait_for_visible_and_stable(select_file_storage_button)
