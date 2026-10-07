@@ -38,6 +38,9 @@ class ActionDescriptor(BaseModel):
         if not path.exists():
             raise ValueError(f"Path {value} does not exists")
 
+        if path.is_dir():
+            return path
+
         if not path.is_file():
             raise ValueError(f"Path {value} is not a file")
 
