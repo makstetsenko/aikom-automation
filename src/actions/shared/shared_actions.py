@@ -32,7 +32,7 @@ def click_on_html_body(page: Page):
 
 
 def fill_auth_key_iframe_and_read_key(page: Page):
-    input("PRESS ENTER")
+    # input("PRESS ENTER")
     
     page.wait_for_timeout(5_000)
 
