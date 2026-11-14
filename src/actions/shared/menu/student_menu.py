@@ -53,7 +53,7 @@ def go_to_student_enrollment_from_another_school_page(page: Page):
 
 
 def go_to_student_enrollment_page(page: Page):
-    link_name = "Зарахування учня (учень не має звʼязку зі школою)"
+    link_name = "Зарахування учня - учень не має зв'язку зі школою"
 
     logger.info(f"Go to '{link_name}'")
     page.get_by_text(link_name).click()

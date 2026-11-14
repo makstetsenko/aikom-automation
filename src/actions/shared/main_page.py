@@ -81,7 +81,6 @@ def try_auth_v2(page: Page):
 
     wait_for_welcome_header(page)
 
-
 def go_to_main_page(page: Page) -> None:
     page.goto(AIKOM_URL)
-    try_auth_v2(page)
+    try_auth(page)

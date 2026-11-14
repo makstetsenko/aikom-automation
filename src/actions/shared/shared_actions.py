@@ -87,3 +87,7 @@ def try_close_all_stupid_popups(page: Page):
             close_button.click()
     except:
         pass
+
+
+def press_enter_to_continue():
+    input("Press ENTER to continue...")

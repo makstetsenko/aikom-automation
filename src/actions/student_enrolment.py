@@ -4,7 +4,7 @@ from playwright.sync_api import Page
 
 from src.actions.shared import shared_actions
 from src.actions.shared.menu import main_menu, student_menu
-from src.actions.shared.students import create_profile, enrolment_from_another_school
+from src.actions.shared.students import create_profile, enrolment_from_another_school, enrol_existing_student_that_is_not_linked_to_any_school
 from src.domain.aikom_enums import DocumentType, RelationshipToStudentType, StudyingForm
 
 
@@ -54,6 +54,41 @@ def enroll_student_from_another_school(
 
     shared_actions.fill_auth_key_iframe_and_read_key_and_click_continue(page)
 
+
+def enroll_existing_student_that_is_not_linked_to_any_school(
+    student_birth_certificate_serial: str,
+    student_birth_certificate_number: str,
+    academic_year: str,
+    studying_form: StudyingForm,
+    class_year: int,
+    class_name: str,
+    enrolment_date: datetime.date,
+    enrolment_order_number: str,
+    page: Page,
+):
+
+    main_menu.go_to_available_service(page)
+    main_menu.go_to_information_about_students(page)
+
+    student_menu.go_to_student_enrollment_page(page)
+
+    enrol_existing_student_that_is_not_linked_to_any_school.search_page.select_document_type(DocumentType.BIRTH_CERTIFICATE, page)
+    enrol_existing_student_that_is_not_linked_to_any_school.search_page.fill_birth_certificate_serial(student_birth_certificate_serial, page)
+    enrol_existing_student_that_is_not_linked_to_any_school.search_page.fill_birth_certificate_number(student_birth_certificate_number, page)
+    
+    shared_actions.click_next_button_on_page(page)
+    
+    enrol_existing_student_that_is_not_linked_to_any_school.enrolment_page_1.select_first_available_school(page)
+    enrol_existing_student_that_is_not_linked_to_any_school.enrolment_page_1.select_academic_year(academic_year, studying_form, page)
+    enrol_existing_student_that_is_not_linked_to_any_school.enrolment_page_1.select_class_year(class_year, page)
+    enrol_existing_student_that_is_not_linked_to_any_school.enrolment_page_1.select_class_name(class_name, page)
+    enrol_existing_student_that_is_not_linked_to_any_school.enrolment_page_1.fill_order_number(enrolment_order_number, page)
+    enrol_existing_student_that_is_not_linked_to_any_school.enrolment_page_1.fill_order_date(enrolment_date, page)
+    
+    shared_actions.click_next_button_on_page(page)
+
+    shared_actions.fill_auth_key_iframe_and_read_key_and_click_continue(page)
+    # shared_actions.press_enter_to_continue()
 
 def enroll_student(
     student_birth_certificate_serial: str,
@@ -114,4 +149,14 @@ def enroll_student(
         return
 
     # enroll student that does not linked with any school
-    raise Exception("Moving student that does not linked to school is not implemented")
+    enroll_existing_student_that_is_not_linked_to_any_school(
+        found_student_info.birth_certificate_serial,  # pass here value from search result because our registry DBs could have old birthdate certificate
+        found_student_info.birth_certificate_number,  # pass here value from search result because our registry DBs could have old birthdate certificate
+        academic_year,
+        studying_form,
+        class_year,
+        class_name,
+        enrolment_date,
+        enrolment_order_number,
+        page,
+    )
